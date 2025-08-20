@@ -2,8 +2,10 @@ package com.example.myapp
 
 
 import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -37,7 +39,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 @Composable
-fun FirstScreen(NavigateToFirstScreen: (String) -> Unit) {
+fun FirstScreen(NavigateToRegister:()-> Unit,NavigateToFirstScreen: (String) -> Unit) {
     val context=LocalContext.current
     var name by rememberSaveable { mutableStateOf("") }
     var nameError by rememberSaveable { mutableStateOf("") }
@@ -147,6 +149,13 @@ fun FirstScreen(NavigateToFirstScreen: (String) -> Unit) {
         ) {
             Text("Login", fontSize = 20.sp)
 
+        }
+        Spacer(modifier=Modifier.padding(20.dp))
+        Row{
+            Text("Not a Member?")
+            Text("Sign In", modifier = Modifier.clickable{
+                NavigateToRegister()
+            })
         }
 
     }

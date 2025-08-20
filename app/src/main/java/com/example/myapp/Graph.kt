@@ -16,6 +16,7 @@ object Graph {
             context,
             RecipeDatabase::class.java,
             name = "Recipelist.db"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
+
     }
 }

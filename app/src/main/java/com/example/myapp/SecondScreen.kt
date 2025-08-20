@@ -1,5 +1,6 @@
 package com.example.myapp
 
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,6 +24,8 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -30,10 +33,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 @Composable
-fun SecondScreen(name:String,NavigateToSecondScreen: () -> Unit) {
+fun SecondScreen(name:String,NavigateToSecondScreen: () -> Unit,viewModel: ViewModel= viewModel()) {
     Box(modifier = Modifier.fillMaxSize()) {
+        val recipelist by viewModel.getallRecipes.collectAsState(initial = emptyList())
 
         Column(
             modifier = Modifier
@@ -53,7 +58,7 @@ fun SecondScreen(name:String,NavigateToSecondScreen: () -> Unit) {
                     .padding(12.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                items(Responsible.savedList) { item ->
+                items(recipelist) { item ->
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -61,7 +66,7 @@ fun SecondScreen(name:String,NavigateToSecondScreen: () -> Unit) {
                             .padding(12.dp)
                     ) {
                         AsyncImage(
-                            model = item.uri,
+                            model = Uri.parse(item.uri),
                             contentDescription = null,
                             modifier = Modifier
                                 .size(55.dp)
